@@ -1,0 +1,199 @@
+
+
+NAME:SWATI RAJENDRA VISHWAKARMA
+ROLL NO: 18
+SUBJECT: FINAL PROJECT(MANUAL TESTING AND AUTOMATION TESTING)
+COURSE: Full Stack Quality Engineering
+
+
+MANUAL TESTING
+[1].Based on the acceptance criteria and mock-up write down the test scenario and test cases
+TEST SCENARIO 1:USER SHOULD BE ABLE TO CLICK ON ABOUT US LINK
+SR NO.
+	TEST CASES	EXPECTED RESULT	TEST DATA	STATUS
+1.	Launch the application as per given data	Application should be able to launch	https://test-nf.com/english.html	PASS
+2.	User should be able to click on About as link	User should ab able to click on About us link		FAIL
+
+TEST SCENARIO 2:USER SHOULD BE ABLE TO NAVIGATE ABOUT US LINK
+SR
+NO.	TEST CASES	EXPECTED RESULT	TEST DATA	STATUS
+1.	Launch the application as per given data	Application should be able to launch	https://test-nf.com/english.html	PASS
+2.	User should be able to click on About as link	User should ab able to click on About us link		FAIL
+3.	After clicking on About us link new information page should appear 	User sholud be able to navigate the About us link page 		FAIL
+
+TEST SCENARIO 3:VERIFY ABOUT US LINK IS AVAILABLE ON ALL THE TABS(HOME,FOOTBALL,BASKETBALL,CRICKET,CYBERSPORT)
+SR
+NO.	TEST CASES	EXPECTED RESULT	TEST DATA	STATUS
+1.	Launch the application as per given data	Application should be able to launch	https://test-nf.com/english.html	PASS
+2.	When user click on tab (i.e.home,football,cricket,
+basketball,cybersport) it should navigate to that tab page	User should be able to
+the navigate to tab which has been clicked		PASS
+3.	About us link should be displayed on every tab footer and User should able to click the link	User should ab able to click on About us link and navigate information page		FAIL
+
+
+[2]. Find out all the possible bugs and assign the priority and severity of the bug.
+1.There are lots of spelling errors in an application (like-busketball,kriket,cibersport,etc)
+->Priority- Medium              Severity- Low
+2.When user click on Michael Jordan photo or learn more option it does not display any information about him like others
+->Priority- High                   Severity- Medium
+3.When user click on close (X) for adverstisements it is not working or closing the ads.
+->Priority- Urgent                Severity- Urgent
+4.When user click on any tab of sports game the paragraphs of sport information have blur last lines so it is not possible to read further.
+->Priority- Urgent                Severity- High
+5. About us link is not working for any tabs it give 404 NOT FOUND error
+->Priority- Urgent                Severity- Urgent               
+6.Contact link is not working for any tabs it give 404 NOT FOUND error
+->Priority-  Urgent               Severity- Urgent               
+7.Any Social media icons is not working
+->Priority- Urgent                Severity- High
+8.In basketball tab one image is not displayed it gives image error
+->Priority-  Medium            Severity- Low
+9.When user scroll down the page ad display on tabs so user are unavailable to click on the tab when he is in footer part of the page
+->Priority- Urgent               Severity- Urgent          
+10.In home page first line has combine two words together(sportspeople)
+->Priority- Low                  Severity- Low
+11.In home page, on photo of Christano Ronaldo, Lionel Messi’s name is written
+->Priority- High                 Severity- High
+12.In football page,photo of other sport is displayed
+->Priority- Urgent              Severity- Urgent
+13.When user move its curser on basketball tab it text become invisible
+->Priority- High                 Severity- High
+14.When user move its curser on football it’s highlight does not cover whole football text
+->Priority- Medium           Severity- Medium
+AUTOMATION TESTING
+CODE –
+PAGEOBJECT-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class PageObject {
+	
+	// Created Page Object
+			@FindBy(xpath = "//a[@href='english.html']")
+			WebElement home;
+			@FindBy(xpath = "//a[text()='Football']")
+			WebElement football;
+			@FindBy(xpath = "//a[@href='busketball.html']")
+			WebElement basketball;
+			@FindBy(xpath = "//*[text()='Kriket")
+			WebElement cricket;
+			@FindBy(xpath = "//a[text()='Cibersport']")
+			WebElement cybersport;
+}
+MAIN-
+package assignment_auto;
+import java.io.FileOutputStream;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import jxl.Workbook;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+public class Swati_fynd {
+	
+	public WebDriver driver;
+	
+	@BeforeMethod
+	public void start() {
+		System.setProperty("webdriver.chrome.driver","D://chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get("https://test-nf.com/english.html");
+		driver.manage().window().maximize();
+	}
+	
+	@Test
+	public void Execute() throws Exception {
+	
+	// Imported the Page Object method by Page Factory property.
+	PageObject P = PageFactory.initElements(driver, PageObject.class);
+	
+	//whether home is displayed,link contains it tab name
+	boolean a = P.home.isDisplayed();
+	System.out.println("Home is displayed:" +a);
+	String b = driver.getCurrentUrl();
+	boolean c = b.contains("english");
+	System.out.println("Home url contains english:" +c);
+	
+	//whether football is displayed,link contains it tab name
+	SoftAssert s = new SoftAssert();
+	boolean d = P.football.isDisplayed();
+	s.assertEquals(d, true);
+	String e = driver.getCurrentUrl();
+	System.out.println("football url:" +e);
+	boolean f = e.contains("football");
+	s.assertEquals(f, true);
+	
+	//whether basketball is displayed,link contains it tab name
+	boolean g = P.basketball.isDisplayed();
+	s.assertEquals(g, true);
+	String h = driver.getCurrentUrl();
+	System.out.println("basketball url:" +h);
+	boolean i = h.contains("busketball");
+	s.assertEquals(i, true);
+	
+	//whether cricket is displayed,link contains it tab name
+	boolean j = P.cricket.isDisplayed();
+	s.assertEquals(j, true);
+	String k = driver.getCurrentUrl();
+	System.out.println("cricket url:" +k);
+	boolean o = k.contains("kriket");
+	s.assertEquals(o, true);
+	
+	//whether cybersport is displayed,link contains it tab name
+	boolean m = P.cybersport.isDisplayed();
+	s.assertEquals(m, true);
+	String n = driver.getCurrentUrl();
+	System.out.println("cybersport url:" +n);
+	boolean r = n.contains("cibersport");
+	s.assertEquals(r, true);
+	
+	//Saving the URL details in Excel 
+			FileOutputStream z = new FileOutputStream("C:\\Users\\Swati\\OneDrive\\Desktop\\url.xls");
+			WritableWorkbook ws = Workbook.createWorkbook(z);
+			WritableSheet x = ws.createSheet("output", 3);
+			jxl.write.Label l = new jxl.write.Label(0, 0, b);
+			jxl.write.Label l1 = new jxl.write.Label(0, 1, e);
+			jxl.write.Label l2 = new jxl.write.Label(0, 2, h);
+			jxl.write.Label l3 = new jxl.write.Label(0, 3, k);
+			jxl.write.Label l4 = new jxl.write.Label(0, 4, n);
+
+			//Adding the Label value in the cell.
+			x.addCell(l);
+		    x.addCell(l1);
+			x.addCell(l2);
+		    x.addCell(l3);
+			x.addCell(l4);
+
+			//Saving and closing the workbook.
+			ws.write();
+			ws.close();
+}
+	@AfterMethod
+	public void end() {
+		driver.close();
+	}
+
+}	
+
+
+TEST REPORT-
+ 
+
+
+
+
+
+
+
+OUTPUT-
+CONSOLE-
+ 
+ 
+EXCEL-
+ 	
